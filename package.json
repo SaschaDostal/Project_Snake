@@ -1,0 +1,24 @@
+{
+  "name": "Clicker",
+  "version": "0.0.1",
+  "description": "Click it",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js",
+    "start:debug": "nodemon --inspect index.js",
+    "test": "jest"
+  },
+  "author": "kofe, dosa, hoal, tabe",
+  "license": "ISC",
+  "jest": {
+    "transform": {
+      "^.+\\.js?$": "babel-jest"
+    }
+  },
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "ejs": "^2.7.1",
+    "express": "^4.17.1",
+    "sqlite3": "^4.1.0"
+  }
+}
