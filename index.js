@@ -1,7 +1,7 @@
 const express = require("express");
 const sqlite3 = require("sqlite3").verbose();
 
-const db = new sqlite3.Database("./db/users.db");
+const db = new sqlite3.Database("./db/Leaderboard");
 
 const port = process.env.PORT || 3000;
 const app = express();
@@ -13,17 +13,21 @@ app.get("/", (req, res) => {
   res.render("pages/index.ejs");
 });
 
-app.post('', async (req, res) =>{
-  if (/*req.body.*/username && /*req.body.*/password) {
-    db.run("INSERT INTO users(username, password) VALUES (?, ?);", [/*req.body.*/username, /*req.body.*/message], err => {
-      if (err) {
-        res.render("");
-      } else {
-        res.redirect("");
+app.post("login", async (req, res) => {
+  if (/*req.body.*/ username) {
+    db.run(
+      "INSERT INTO Leaderboard(username, highscore) VALUES (?, ?);",
+      [/*req.body.*/ username, 0],
+      err => {
+        if (err) {
+          res.render("login", { error: true });
+        } else {
+          res.redirect("gamePage");
+        }
       }
-    });
+    );
   } else {
-    res.render("");
+    res.render("login", { empty: true });
   }
 });
 
