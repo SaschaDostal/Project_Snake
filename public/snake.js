@@ -137,4 +137,8 @@ window.addEventListener('keydown', e => {
 })
 
 // Main
-draw(); window.requestAnimationFrame(step(0))
+draw(); 
+document.getElementById("gamestart").addEventListener("click", function(){
+  window.requestAnimationFrame(step(0))
+});
+
