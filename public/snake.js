@@ -1,38 +1,38 @@
 // Methods
-const adjust    = n => f => xs => mapi(x => i => i == n ? f(x) : x)(xs)
+const adjust = n => f => xs => mapi(x => i => i == n ? f(x) : x)(xs)
 const dropFirst = xs => xs.slice(1)
-const dropLast  = xs => xs.slice(0, xs.length - 1)
-const id        = x => x
-const k         = x => y => x
-const map       = f => xs => xs.map(f)
-const mapi      = f => xs => xs.map((x, i) => f(x)(i))
-const merge     = o1 => o2 => Object.assign({}, o1, o2)
-const mod       = x => y => ((y % x) + x) % x 
-const objOf     = k => v => ({ [k]: v })
-const pipe      = (...fns) => x => [...fns].reduce((acc, f) => f(acc), x)
-const prop      = k => o => o[k]
-const range     = n => m => Array.apply(null, Array(m - n)).map((_, i) => n + i)
-const rep       = c => n => map(k(c))(range(0)(n))
-const rnd       = min => max => Math.floor(Math.random() * max) + min
-const spec      = o => x => Object.keys(o)
-    .map(k => objOf(k)(o[k](x)))
-    .reduce((acc, o) => Object.assign(acc, o))
+const dropLast = xs => xs.slice(0, xs.length - 1)
+const id = x => x
+const k = x => y => x
+const map = f => xs => xs.map(f)
+const mapi = f => xs => xs.map((x, i) => f(x)(i))
+const merge = o1 => o2 => Object.assign({}, o1, o2)
+const mod = x => y => ((y % x) + x) % x
+const objOf = k => v => ({ [k]: v })
+const pipe = (...fns) => x => [...fns].reduce((acc, f) => f(acc), x)
+const prop = k => o => o[k]
+const range = n => m => Array.apply(null, Array(m - n)).map((_, i) => n + i)
+const rep = c => n => map(k(c))(range(0)(n))
+const rnd = min => max => Math.floor(Math.random() * max) + min
+const spec = o => x => Object.keys(o)
+  .map(k => objOf(k)(o[k](x)))
+  .reduce((acc, o) => Object.assign(acc, o))
 
 // Constants
 const canvas = document.getElementById('gamecanvas')
 const ctx = canvas.getContext('2d')
-const UP = { x: 0, y:-1 }
+const UP = { x: 0, y: -1 }
 const DOWN = { x: 0, y: 1 }
-const RIGHT  = { x: 1, y: 0 }
-const LEFT  = { x:-1, y: 0 }
+const RIGHT = { x: 1, y: 0 }
+const LEFT = { x: -1, y: 0 }
 
 // Point operations
 const pointEq = p1 => p2 => p1.x == p2.x && p1.y == p2.y
 
 // Booleans
-const willEat   = state => pointEq(nextHead(state))(state.apple)
+const willEat = state => pointEq(nextHead(state))(state.apple)
 const willCrash = state => {
-  if (state.snake.find(pointEq(nextHead(state))) || nextHead(state).x >= state.cols - 1 || nextHead(state).x < 1 || nextHead(state).y >= state.rows - 1 || nextHead(state).y < 1) return true;
+  if (state.snake.find(pointEq(nextHead(state))) || nextHead(state).x >= state.cols - 1 || nextHead(state).x < 1 || nextHead(state).y >= state.rows - 1 || nextHead(state).y < 1) { document.querySelector('.background').style.display = "flex"; return true; }
   return false;
 }
 const validMove = move => state =>
@@ -41,7 +41,7 @@ const validMove = move => state =>
 // Next values based on state
 const nextMoves = state => state.moves.length > 1 ? dropFirst(state.moves) : state.moves
 const nextApple = state => willEat(state) ? rndPos(state) : state.apple
-const nextHead  = state => state.snake.length == 0
+const nextHead = state => state.snake.length == 0
   ? { x: 10, y: 10 }
   : {
     x: mod(state.cols)(state.snake[0].x + state.moves[0].x),
@@ -61,16 +61,16 @@ const rndPos = table => ({
 
 // Initial state
 const initialState = () => ({
-  cols:  25,
-  rows:  25,
+  cols: 25,
+  rows: 25,
   moves: [RIGHT],
   snake: [],
   apple: { x: 16, y: 2 },
 })
 
 const next = spec({
-  rows:  prop('rows'),
-  cols:  prop('cols'),
+  rows: prop('rows'),
+  cols: prop('cols'),
   moves: nextMoves,
   snake: nextSnake,
   apple: nextApple
@@ -79,7 +79,7 @@ const next = spec({
 const enqueue = (state, move) => validMove(move)(state)
   ? merge(state)({ moves: state.moves.concat([move]) })
   : state
-  
+
 // Mutable state
 let state = initialState()
 
@@ -129,10 +129,10 @@ const step = t1 => t2 => {
 // Key events
 window.addEventListener('keydown', e => {
   switch (e.key) {
-    case 'w': case 'ArrowUp':    state = enqueue(state, UP); break;
-    case 'a': case 'ArrowLeft':  state = enqueue(state, LEFT);  break;
-    case 's': case 'ArrowDown':  state = enqueue(state, DOWN); break;
-    case 'd': case 'ArrowRight': state = enqueue(state, RIGHT);  break;
+    case 'w': case 'ArrowUp': state = enqueue(state, UP); break;
+    case 'a': case 'ArrowLeft': state = enqueue(state, LEFT); break;
+    case 's': case 'ArrowDown': state = enqueue(state, DOWN); break;
+    case 'd': case 'ArrowRight': state = enqueue(state, RIGHT); break;
   }
 })
 
