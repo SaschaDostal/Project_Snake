@@ -25,120 +25,135 @@ const UP = { x: 0, y: -1 }
 const DOWN = { x: 0, y: 1 }
 const RIGHT = { x: 1, y: 0 }
 const LEFT = { x: -1, y: 0 }
+var notChrashed = true;
+var snakeLength = 0;
 
-// Point operations
-const pointEq = p1 => p2 => p1.x == p2.x && p1.y == p2.y
+//SnakeGameMain
+function snakeMain() {
+  // Point operations
+  const pointEq = p1 => p2 => p1.x == p2.x && p1.y == p2.y
 
-// Booleans
-const willEat = state => pointEq(nextHead(state))(state.apple)
-const willCrash = state => {
-  if (state.snake.find(pointEq(nextHead(state))) || nextHead(state).x >= state.cols - 1 || nextHead(state).x < 1 || nextHead(state).y >= state.rows - 1 || nextHead(state).y < 1) { document.querySelector('.background').style.display = "flex"; return true; }
-  return false;
-}
-const validMove = move => state =>
-  state.moves[0].x + move.x != 0 || state.moves[0].y + move.y != 0
-
-// Next values based on state
-const nextMoves = state => state.moves.length > 1 ? dropFirst(state.moves) : state.moves
-const nextApple = state => willEat(state) ? rndPos(state) : state.apple
-const nextHead = state => state.snake.length == 0
-  ? { x: 10, y: 10 }
-  : {
-    x: mod(state.cols)(state.snake[0].x + state.moves[0].x),
-    y: mod(state.rows)(state.snake[0].y + state.moves[0].y)
+  // Booleans
+  const willEat = state => { 
+    if(pointEq(nextHead(state))(state.apple)){
+      snakeLength++; console.info("Snake Length: " + snakeLength);}
+      return pointEq(nextHead(state))(state.apple);}
+  const willCrash = state => {
+    if (state.snake.find(pointEq(nextHead(state))) || nextHead(state).x >= state.cols - 1 || nextHead(state).x < 1 || nextHead(state).y >= state.rows - 1 || nextHead(state).y < 1) {
+      document.querySelector('.background').style.display = "flex"; notChrashed = false; console.info("willCrash"); return true;
+    } 
+    console.info("willNotCrash"); return false;
   }
-const nextSnake = state => willCrash(state)
-  ? []
-  : (willEat(state)
-    ? [nextHead(state)].concat(state.snake)
-    : [nextHead(state)].concat(dropLast(state.snake)))
+  const validMove = move => state =>
+    state.moves[0].x + move.x != 0 || state.moves[0].y + move.y != 0
 
-// Randomness
-const rndPos = table => ({
-  x: rnd(1)(table.cols - 2),
-  y: rnd(1)(table.rows - 2)
-})
+  // Next values based on state
+  const nextMoves = state => state.moves.length > 1 ? dropFirst(state.moves) : state.moves
+  const nextApple = state => willEat(state) ? rndPos(state) : state.apple
+  const nextHead = state => state.snake.length == 0
+    ? { x: 10, y: 10 }
+    : {
+      x: mod(state.cols)(state.snake[0].x + state.moves[0].x),
+      y: mod(state.rows)(state.snake[0].y + state.moves[0].y)
+    }
+  const nextSnake = state => willCrash(state)
+    ? []
+    : (willEat(state)
+      ? [nextHead(state)].concat(state.snake)
+      : [nextHead(state)].concat(dropLast(state.snake)))
 
-// Initial state
-const initialState = () => ({
-  cols: 25,
-  rows: 25,
-  moves: [RIGHT],
-  snake: [],
-  apple: { x: 16, y: 2 },
-})
+  // Randomness
+  const rndPos = table => ({
+    x: rnd(1)(table.cols - 2),
+    y: rnd(1)(table.rows - 2)
+  })
 
-const next = spec({
-  rows: prop('rows'),
-  cols: prop('cols'),
-  moves: nextMoves,
-  snake: nextSnake,
-  apple: nextApple
-})
+  // Initial state
+  const initialState = () => ({
+    cols: 30,
+    rows: 20,
+    moves: [RIGHT],
+    snake: [],
+    apple: { x: 16, y: 2 },
+  })
 
-const enqueue = (state, move) => validMove(move)(state)
-  ? merge(state)({ moves: state.moves.concat([move]) })
-  : state
+  const next = spec({
+    rows: prop('rows'),
+    cols: prop('cols'),
+    moves: nextMoves,
+    snake: nextSnake,
+    apple: nextApple
+  })
 
-// Mutable state
-let state = initialState()
+  const enqueue = (state, move) => validMove(move)(state)
+    ? merge(state)({ moves: state.moves.concat([move]) })
+    : state
 
-// Position helpers
-const x = c => Math.round(c * canvas.width / state.cols)
-const y = r => Math.round(r * canvas.height / state.rows)
+  // Mutable state
+  let state = initialState()
 
-// Game loop draw
-const draw = () => {
-  // clear
-  ctx.fillStyle = '#232323'
-  ctx.fillRect(0, 0, canvas.width, canvas.height)
+  // Position helpers
+  const x = c => Math.round(c * canvas.width / state.cols)
+  const y = r => Math.round(r * canvas.height / state.rows)
 
-  // draw snake
-  ctx.fillStyle = 'rgb(150,0,255)'
-  state.snake.map(p => ctx.fillRect(x(p.x), y(p.y), x(1), y(1)))
-
-  // draw apples
-  ctx.fillStyle = 'rgb(0,255,0)'
-  ctx.fillRect(x(state.apple.x), y(state.apple.y), x(1), y(1))
-
-  // add crash
-  if (state.snake.length == 0) {
-    ctx.fillStyle = 'rgb(255,0,0)'
+  // Game loop draw
+  const draw = () => {
+    // clear
+    ctx.fillStyle = '#232323'
     ctx.fillRect(0, 0, canvas.width, canvas.height)
+
+    // draw snake
+    ctx.fillStyle = 'rgb(150,0,255)'
+    state.snake.map(p => ctx.fillRect(x(p.x), y(p.y), x(1), y(1)))
+
+    // draw apples
+    ctx.fillStyle = 'rgb(0,255,0)'
+    ctx.fillRect(x(state.apple.x), y(state.apple.y), x(1), y(1))
+
+    // add crash
+    if (state.snake.length == 0) {
+      ctx.fillStyle = 'rgb(255,0,0)'
+      ctx.fillRect(0, 0, canvas.width, canvas.height)
+    }
+
+    //draw borders
+    ctx.fillStyle = 'rgb(255,50,0  )'
+    ctx.fillRect(0, 0, x(1), canvas.height)
+    ctx.fillRect(0, 0, canvas.width, x(1))
+    ctx.fillRect(canvas.width - x(1), 0, canvas.width, canvas.height)
+    ctx.fillRect(0, canvas.height - x(1), canvas.width, canvas.height)
   }
 
-  //draw borders
-  ctx.fillStyle = 'rgb(255,50,0  )'
-  ctx.fillRect(0, 0, x(1), canvas.height)
-  ctx.fillRect(0, 0, canvas.width, x(1))
-  ctx.fillRect(canvas.width - x(1), 0, canvas.width, canvas.height)
-  ctx.fillRect(0, canvas.height - x(1), canvas.width, canvas.height)
-}
-
-// Game loop update
-const step = t1 => t2 => {
-  if (t2 - t1 > 125) {
-    state = next(state)
-    draw()
-    window.requestAnimationFrame(step(t2))
-  } else {
-    window.requestAnimationFrame(step(t1))
+  // Game loop update
+  const step = t1 => t2 => {
+    if ((t2 - t1 > 125) && notChrashed) {
+      state = next(state)
+      document.getElementById("gamepoints").innerHTML = "Points: " + (snakeLength/2);
+      draw()
+      window.requestAnimationFrame(step(t2))
+    }else{
+      window.requestAnimationFrame(step(t1))
+    }
   }
-}
 
-// Key events
-window.addEventListener('keydown', e => {
-  switch (e.key) {
-    case 'w': case 'ArrowUp': state = enqueue(state, UP); break;
-    case 'a': case 'ArrowLeft': state = enqueue(state, LEFT); break;
-    case 's': case 'ArrowDown': state = enqueue(state, DOWN); break;
-    case 'd': case 'ArrowRight': state = enqueue(state, RIGHT); break;
-  }
-})
+  // Key events
+  window.addEventListener('keydown', e => {
+    switch (e.key) {
+      case 'w': case 'ArrowUp': state = enqueue(state, UP); break;
+      case 'a': case 'ArrowLeft': state = enqueue(state, LEFT); break;
+      case 's': case 'ArrowDown': state = enqueue(state, DOWN); break;
+      case 'd': case 'ArrowRight': state = enqueue(state, RIGHT); break;
+    }
+  })
 
-// Main
-draw(); 
-document.getElementById("gamestart").addEventListener("click", function(){
+  draw();
   window.requestAnimationFrame(step(0))
-});
+}
 
+// Run Main
+ctx.fillStyle = 'rgb(0,0,255)'
+ctx.fillRect(0, 0, canvas.width, canvas.height)
+document.getElementById("gamestart").addEventListener("click", function () {
+  console.info("ButtonPressed")
+  snakeMain();
+});
