@@ -1,7 +1,26 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <h1>Snake Game</h1>
-    
-  </head>
+
+<head>
+  <link rel="stylesheet" href="/public/style.css">
+  <h1>Snake Game</h1>
+  <script>require = () => ({}); module = {}; module.exports = () => ({})</script>
+  <link rel="stylesheet" href="/public/style_defeat.css">
+</head>
+
+<body>
+  <h2 id=gamepoints>Play the Game!</h2>
+  <button id="gamestart" type="submit">Start</button>
+  <canvas id="gamecanvas" width="700" height="500"></canvas>
+  <script src="/public/snake.js"></script>
+
+  <div class="background">
+    <div class="content">
+      <img class="img" src="/views/pages/so.png">
+      <button id="gamerestart" type="button">Try again!</button>
+      <a href="http://google.de"><button>Submit!</button></a>
+    </div>
+  </div>
+</body>
+
 </html>
