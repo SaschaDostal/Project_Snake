@@ -128,6 +128,7 @@ function snakeMain() {
   const step = t1 => t2 => {
     if ((t2 - t1 > 125) && notChrashed) {
       state = next(state)
+      document.getElementById("gamepoints").innerHTML = "Points: " + (snakeLength/2);
       draw()
       window.requestAnimationFrame(step(t2))
     }else{
@@ -150,7 +151,7 @@ function snakeMain() {
 }
 
 // Run Main
-ctx.fillStyle = 'rgb(255,0,0)'
+ctx.fillStyle = 'rgb(0,0,255)'
 ctx.fillRect(0, 0, canvas.width, canvas.height)
 document.getElementById("gamestart").addEventListener("click", function () {
   console.info("ButtonPressed")
