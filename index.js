@@ -22,7 +22,7 @@ app.get("/", (req, res) => {
 app.get("/pages/highscore.ejs", (req, res) => {
   var users = null;
 
-  db.all("SELECT * FROM Leaderboard ORDER BY Highscore", (err, rows) => {
+  db.all("SELECT * FROM Leaderboard ORDER BY Highscore DESC", (err, rows) => {
     if (err) {
       console.log(err);
     } else {
@@ -42,6 +42,22 @@ app.post("/login", async (req, res) => {
         res.render("pages/Loginscreen.ejs", { error: true });
       } else {
         res.redirect("pages/index.ejs");
+      }
+    }
+  );
+});
+
+app.post("/pages/saveScore", async (req, res) => {
+  db.run(
+    "UPDATE Leaderboard SET Highscore=? WHERE id=?;",
+    [req.body.Score, 1],
+    err => {
+      if (err) {
+        console.log(err);
+        res.render("index.ejs", { error: true });
+      } else {
+        console.log(req.body.Score);
+        res.redirect("highscore.ejs");
       }
     }
   );
