@@ -13,7 +13,6 @@ app.use(bodyparser.json());
 app.set("view engine", "ejs");
 app.use("/public", express.static(process.cwd() + "/public"));
 
-app.use("/public", express.static(process.cwd() + "/public"));
 app.use("/views", express.static(process.cwd() + "/views"));
 
 app.get("/", (req, res) => {
@@ -22,8 +21,8 @@ app.get("/", (req, res) => {
 
 app.post("/login", async (req, res) => {
   db.run(
-    "INSERT INTO Leaderboard(username, highscore) VALUES (?, ?);",
-    [req.body.username, 0],
+    "INSERT INTO Leaderboard(Username, Highscore) VALUES (?, ?);",
+    [req.body.uname, 0],
     err => {
       if (err) {
         res.render("pages/Loginscreen.ejs", { error: true });
