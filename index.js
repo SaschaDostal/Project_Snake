@@ -1,34 +1,41 @@
 const express = require("express");
 const sqlite3 = require("sqlite3").verbose();
+const bodyparser = require("body-parser");
 
 const db = new sqlite3.Database("./db/Leaderboard");
 
 const port = process.env.PORT || 3000;
 const app = express();
 
+app.use(bodyparser.urlencoded({ extended: true }));
+app.use(bodyparser.json());
+
 app.set("view engine", "ejs");
 app.use("/public", express.static(process.cwd() + "/public"));
 
+app.use("/public", express.static(process.cwd() + "/public"));
+app.use("/views", express.static(process.cwd() + "/views"));
+
 app.get("/", (req, res) => {
-  res.render("pages/index.ejs");
+  res.render("pages/Loginscreen.ejs");
 });
 
-app.post("login", async (req, res) => {
-  if (/*req.body.*/ username) {
-    db.run(
-      "INSERT INTO Leaderboard(username, highscore) VALUES (?, ?);",
-      [/*req.body.*/ username, 0],
-      err => {
-        if (err) {
-          res.render("login", { error: true });
-        } else {
-          res.redirect("gamePage");
-        }
+app.post("/login", async (req, res) => {
+  db.run(
+    "INSERT INTO Leaderboard(username, highscore) VALUES (?, ?);",
+    [req.body.username, 0],
+    err => {
+      if (err) {
+        res.render("pages/Loginscreen.ejs", { error: true });
+      } else {
+        res.redirect("pages/index.ejs");
       }
-    );
-  } else {
-    res.render("login", { empty: true });
-  }
+    }
+  );
+});
+
+app.get("/pages/index.ejs", (req, res) => {
+  res.render("pages/index.ejs");
 });
 
 const server = app.listen(port, () => {
@@ -36,3 +43,7 @@ const server = app.listen(port, () => {
 });
 
 module.exports = server;
+
+function showDefeat() {
+  document.querySelector("content").style.display = "flex";
+}
