@@ -1,6 +1,26 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    titel
-  </head>
+
+<head>
+  <link rel="stylesheet" href="/public/style.css">
+  <h1>Snake Game</h1>
+  <script>require = () => ({}); module = {}; module.exports = () => ({})</script>
+  <link rel="stylesheet" href="/public/style_defeat.css">
+</head>
+
+<body>
+  <h2 id=gamepoints>Play the Game!</h2>
+  <button id="gamestart" type="submit">Start</button>
+  <canvas id="gamecanvas" width="700" height="500"></canvas>
+  <script src="/public/snake.js"></script>
+
+  <div class="background">
+    <div class="content">
+      <img class="img" src="/views/pages/so.png">
+      <a href="https://de.wikipedia.org/wiki/Burj_Khalifa"><button>Highscore</button></a>
+      <a href="javascript:location.reload()"><button>Try again!</button></a>
+    </div>
+  </div>
+</body>
+
 </html>
