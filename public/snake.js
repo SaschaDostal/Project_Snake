@@ -166,6 +166,6 @@ function submitScore () {
     console.info("Score=" + snakeLength/2);
     xhttp.open("POST", "saveScore", true);
     xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded;charset=UTF-8");
-    xhttp.send("Score=" + (snakeLength/2));
+    xhttp.send("Score=" + (snakeLength/2) + "&myID=" + document.getElementById("NICE").innerHTML);
   });
 }

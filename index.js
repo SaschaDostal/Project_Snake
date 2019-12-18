@@ -37,27 +37,27 @@ app.post("/login", async (req, res) => {
   db.run(
     "INSERT INTO Leaderboard(Username, Highscore) VALUES (?, ?);",
     [req.body.uname, 0],
-    err => {
+    function(err) {
       if (err) {
         res.render("pages/Loginscreen.ejs", { error: true });
       } else {
-        res.redirect("pages/index.ejs");
+        res.render("pages/index.ejs", { yourID: this.lastID });
       }
     }
   );
 });
 
-app.post("/pages/saveScore", async (req, res) => {
+app.post("/saveScore", async (req, res) => {
   db.run(
     "UPDATE Leaderboard SET Highscore=? WHERE id=?;",
-    [req.body.Score, 1],
+    [req.body.Score, req.body.myID],
     err => {
       if (err) {
         console.log(err);
         res.render("index.ejs", { error: true });
       } else {
         console.log(req.body.Score);
-        res.redirect("highscore.ejs");
+        console.log(req.body.myID);
       }
     }
   );
