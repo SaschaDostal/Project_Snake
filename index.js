@@ -19,6 +19,20 @@ app.get("/", (req, res) => {
   res.render("pages/Loginscreen.ejs");
 });
 
+app.get("/pages/highscore.ejs", (req, res) => {
+  var users = null;
+
+  db.all("SELECT * FROM Leaderboard ORDER BY Highscore", (err, rows) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.render("pages/highscore.ejs", {
+        data: rows
+      });
+    }
+  });
+});
+
 app.post("/login", async (req, res) => {
   db.run(
     "INSERT INTO Leaderboard(Username, Highscore) VALUES (?, ?);",
