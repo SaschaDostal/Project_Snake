@@ -1,6 +1,10 @@
-html, body {
+/*html, body {
   background:      #121212;
   color:           rgb(255, 255, 255);
+}*/
+
+.gameHeadline2 {
+  color: white;
 }
 .background{
   width: 100%;
@@ -25,4 +29,11 @@ button {
   width: 45%;
   margin: 10px;
 
+}
+.gameBody {
+  background-color: black;
+}
+
+.workaround {
+  display: none;
 }
