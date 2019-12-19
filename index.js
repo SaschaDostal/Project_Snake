@@ -64,7 +64,7 @@ app.post("/saveScore", async (req, res) => {
 });
 
 app.get("/pages/index.ejs", (req, res) => {
-  res.render("pages/index.ejs");
+  res.render("pages/index.ejs", { yourID: undefineds/*TODO: some kind of thing to remember ID*/ });
 });
 
 const server = app.listen(port, () => {

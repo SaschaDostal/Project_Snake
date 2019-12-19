@@ -33,3 +33,7 @@ button {
 .gameBody {
   background-color: black;
 }
+
+.workaround {
+  display: none;
+}
