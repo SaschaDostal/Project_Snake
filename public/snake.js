@@ -34,14 +34,14 @@ function snakeMain() {
   const pointEq = p1 => p2 => p1.x == p2.x && p1.y == p2.y
 
   // Booleans
-  const willEat = state => { 
+  const willEat = state => {
     if(pointEq(nextHead(state))(state.apple)){
       snakeLength++; console.info("Snake Length: " + snakeLength);}
       return pointEq(nextHead(state))(state.apple);}
   const willCrash = state => {
     if (state.snake.find(pointEq(nextHead(state))) || nextHead(state).x >= state.cols - 1 || nextHead(state).x < 1 || nextHead(state).y >= state.rows - 1 || nextHead(state).y < 1) {
-      document.querySelector('.background').style.display = "flex"; notChrashed = false; console.info("willCrash"); return true;
-    } 
+      document.querySelector('.background').style.display = "flex"; notChrashed = false; console.info("willCrash"); submitScore();return true;
+    }
     console.info("willNotCrash"); return false;
   }
   const validMove = move => state =>
@@ -157,3 +157,15 @@ document.getElementById("gamestart").addEventListener("click", function () {
   console.info("ButtonPressed")
   snakeMain();
 });
+
+
+// Submit Score to Server
+function submitScore () {
+  const xhttp = new XMLHttpRequest();
+  document.getElementById("highscoreButton").addEventListener("click", function () {
+    console.info("Score=" + snakeLength/2);
+    xhttp.open("POST", "saveScore", true);
+    xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded;charset=UTF-8");
+    xhttp.send("Score=" + (snakeLength/2) + "&myID=" + document.getElementById("NICE").innerHTML);
+  });
+}
