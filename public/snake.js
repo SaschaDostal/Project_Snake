@@ -28,6 +28,7 @@ const LEFT = { x: -1, y: 0 }
 resize();
 var notChrashed = true;
 var snakeLength = 0;
+var gameStarted = false;
 
 //SnakeGameMain
 function snakeMain() {
@@ -156,7 +157,10 @@ ctx.fillStyle = 'rgb(128,128,128)'
 ctx.fillRect(0, 0, canvas.width, canvas.height)
 document.getElementById("gamestart").addEventListener("click", function () {
   console.info("ButtonPressed")
-  snakeMain();
+  if(!gameStarted){
+    snakeMain();
+    gameStarted = true;
+  }
 });
 
 
