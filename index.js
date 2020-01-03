@@ -69,25 +69,19 @@ app.post("/saveScore", async (req, res) => {
       if (err) {
         res.render("pages/index.ejs", { error: true });
       } else {
-        res.render("pages/highscore.ejs", {yourID: this.lastID});
+        db.all("SELECT * FROM Leaderboard ORDER BY Highscore DESC", (err, rows) => {
+          if (err) {
+            console.log(err);
+          } else {
+            res.render("pages/highscore.ejs", {
+              data: rows,
+              yourID: this.lastID
+            });
+          }
+        });
       }
     }
   );
-  /*
-  db.run(
-    "UPDATE Leaderboard SET Highscore=? WHERE id=?;",
-    [req.body.Score, req.body.myID],
-    err => {
-      if (err) {
-        console.log(err);
-        res.render("index.ejs", { error: true });
-      } else {
-        console.log(req.body.Score);
-        console.log(req.body.myID);
-      }
-    }
-  );
-  */
 });
 
 app.get("/pages/index.ejs", (req, res) => {
