@@ -20,8 +20,6 @@ app.get("/", (req, res) => {
 });
 
 app.get("/pages/highscore.ejs", (req, res) => {
-  var users = null;
-
   db.all("SELECT * FROM Leaderboard ORDER BY Highscore DESC", (err, rows) => {
     if (err) {
       console.log(err);
@@ -34,20 +32,48 @@ app.get("/pages/highscore.ejs", (req, res) => {
 });
 
 app.post("/login", async (req, res) => {
-  db.run(
-    "INSERT INTO Leaderboard(Username, Highscore) VALUES (?, ?);",
-    [req.body.uname, 0],
-    function(err) {
+  let firstTen = [{ Username: "Be the first ", Highscore: "\u221E" }];
+  db.all(
+    "SELECT * FROM Leaderboard ORDER BY Highscore DESC",
+    async (err, rows) => {
       if (err) {
-        res.render("pages/Loginscreen.ejs", { error: true });
+        console.log(err);
       } else {
-        res.render("pages/index.ejs", { yourID: this.lastID });
+        let length = rows.length;
+        if (length > 10) {
+          for (var i = 0; i < 10; i++) {
+            firstTen[i] = rows[i];
+          }
+        } else {
+          for (var i = 0; i < length; i++) {
+            firstTen[i] = rows[i];
+          }
+        }
+        console.log("firstTen: " + firstTen);
+
+        res.render("pages/index.ejs", {
+          data: firstTen,
+          username: req.body.uname
+        });
       }
     }
   );
 });
 
 app.post("/saveScore", async (req, res) => {
+  let yourID;
+  db.run(
+    "INSERT INTO Leaderboard(Username, Highscore) VALUES (?, ?);",
+    [req.body.uname, req.body.Score],
+    function(err) {
+      if (err) {
+        res.render("pages/index.ejs", { error: true });
+      } else {
+        res.render("pages/highscore.ejs", {yourID: this.lastID});
+      }
+    }
+  );
+  /*
   db.run(
     "UPDATE Leaderboard SET Highscore=? WHERE id=?;",
     [req.body.Score, req.body.myID],
@@ -61,10 +87,38 @@ app.post("/saveScore", async (req, res) => {
       }
     }
   );
+  */
 });
 
 app.get("/pages/index.ejs", (req, res) => {
-  res.render("pages/index.ejs", { yourID: undefineds/*TODO: some kind of thing to remember ID*/ });
+  let firstTen = [
+    { Username: "Be the first ", Highscore: "\u221E" }
+  ]; /*= [null, null, null, null, null, null, null, null, null, null]*/
+  db.all(
+    "SELECT * FROM Leaderboard ORDER BY Highscore DESC",
+    async (err, rows) => {
+      if (err) {
+        console.log(err);
+      } else {
+        let length = rows.length;
+        if (length > 10) {
+          for (var i = 0; i < 10; i++) {
+            firstTen[i] = rows[i];
+          }
+        } else if (length != 0) {
+          for (var i = 0; i < length; i++) {
+            firstTen[i] = rows[i];
+          }
+        } else {
+          console.log("firstTen: " + firstTen);
+
+          res.render("pages/index.ejs", {
+            data: firstTen
+          });
+        }
+      }
+    }
+  );
 });
 
 const server = app.listen(port, () => {

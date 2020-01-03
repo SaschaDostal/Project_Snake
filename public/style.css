@@ -25,15 +25,19 @@
   text-align: center;
   padding: 20px;
 }
-button {
-  width: 45%;
+.startButton {
+  min-width: 80px;
+  max-width: 750px;
+  width: 10%;
   margin: 10px;
-
 }
 .gameBody {
   background-color: black;
 }
-
 .workaround {
   display: none;
+}
+.highscorePreview {
+  position: relative;
+  align-self: flex-end;
 }
