@@ -25,6 +25,7 @@ const UP = { x: 0, y: -1 }
 const DOWN = { x: 0, y: 1 }
 const RIGHT = { x: 1, y: 0 }
 const LEFT = { x: -1, y: 0 }
+resize();
 var notChrashed = true;
 var snakeLength = 0;
 
@@ -169,3 +170,29 @@ function submitScore () {
     xhttp.send("Score=" + (snakeLength/2) + "&uname=" + document.getElementById("NICE").innerHTML);
   });
 }
+
+// resize the gamecanvas
+function resize() {
+
+  var canvas = document.getElementById('gamecanvas');
+  var canvasRatio = canvas.height / canvas.width;
+  var windowRatio = window.innerHeight / window.innerWidth;
+  var width;
+  var height;
+
+  if(window.innerWidth > 750 ){
+      height = 500;
+      width = 750;
+  } else if (windowRatio < canvasRatio) {
+      height = 0.8 * window.innerHeight;
+      width = 3/2 * height;
+  } else {
+      width = window.innerWidth;
+      height = 2/3 * width ;
+  }
+
+  canvas.style.width = width + 'px';
+  canvas.style.height = height + 'px';
+};
+
+window.addEventListener('resize', resize, false);
