@@ -1,26 +1,52 @@
 <!doctype html>
 <html lang="en">
-
 <head>
+  <% include ../partials/header %>
   <link rel="stylesheet" href="/public/style.css">
-  <h1>Snake Game</h1>
   <script>require = () => ({}); module = {}; module.exports = () => ({})</script>
   <link rel="stylesheet" href="/public/style_defeat.css">
 </head>
 
-<body>
-  <h2 id=gamepoints>Play the Game!</h2>
-  <button id="gamestart" type="submit">Start</button>
+<body class="gameBody">
+  <%- include('../partials/nav', { active: 'Game' }) %>
+  <h2 class="gameHeadline2" id=gamepoints>Play the Game!</h2>
+  <button class="btn btn-success startButton" id="gamestart" type="submit">Start</button><br>
   <canvas id="gamecanvas" width="750" height="500"></canvas>
   <script src="/public/snake.js"></script>
 
   <div class="background">
     <div class="content">
       <img class="img" src="/views/pages/so.png">
-      <a href="https://de.wikipedia.org/wiki/Burj_Khalifa"><button>Highscore</button></a>
+      <a href="/pages/highscore.ejs"><button id="highscoreButton" type="submit">Highscore</button></a>
       <a href="javascript:location.reload()"><button>Try again!</button></a>
     </div>
   </div>
+
+
+  <div class="highscorePreview">
+    <table class="table table-hover table-dark table-bordered">
+      <thead>
+        <tr>
+          <th scope="col">Place</th>
+          <th scope="col">Name</th>
+          <th scope="col">Score</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% data.length %>
+        <% data.forEach(function (elem) { %>
+        <tr>
+          <td><%= data.indexOf(elem)+1 %></td>
+          <td><%= elem.Username %></td>
+          <td><%= elem.Highscore %></td>
+        </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+
+
+  <div class="workaround" id="NICE"><%= username %></div>
 </body>
 
 </html>

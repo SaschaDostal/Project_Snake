@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <% include ../partials/header %>
+</head>
+
+<body class="highscoreBody">
+  <%- include('../partials/nav', { active: 'Highscore' }) %>
+  <table class="table table-hover table-dark table-bordered">
+    <thead>
+      <tr>
+        <th scope="col">Place</th>
+        <th scope="col">Name</th>
+        <th scope="col">Score</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% data.forEach(elem => { %>
+      <tr>
+        <td><%= data.indexOf(elem)+1 %></td>
+        <td><%= elem.Username %></td>
+        <td><%= elem.Highscore %></td>
+      </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</body>
+
+</html>
