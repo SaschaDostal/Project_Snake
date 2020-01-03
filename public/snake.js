@@ -118,7 +118,7 @@ function snakeMain() {
     }
 
     //draw borders
-    ctx.fillStyle = 'rgb(255,50,0  )'
+    ctx.fillStyle = 'rgb(128,128,128)'
     ctx.fillRect(0, 0, x(1), canvas.height)
     ctx.fillRect(0, 0, canvas.width, x(1))
     ctx.fillRect(canvas.width - x(1), 0, canvas.width, canvas.height)
@@ -152,7 +152,7 @@ function snakeMain() {
 }
 
 // Run Main
-ctx.fillStyle = 'rgb(0,0,255)'
+ctx.fillStyle = 'rgb(128,128,128)'
 ctx.fillRect(0, 0, canvas.width, canvas.height)
 document.getElementById("gamestart").addEventListener("click", function () {
   console.info("ButtonPressed")
@@ -180,7 +180,7 @@ function resize() {
   var width;
   var height;
 
-  if(window.innerWidth > 750 ){
+  if(window.innerWidth > 750 && window.innerHeight > 500){
       height = 500;
       width = 750;
   } else if (windowRatio < canvasRatio) {
