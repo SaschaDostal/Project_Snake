@@ -12,7 +12,7 @@
   <h2 class="gameHeadline2" id=gamepoints>Play the Game!</h2>
   <button class="btn btn-success startButton" id="gamestart" type="submit">Start</button><br>
   <canvas id="gamecanvas" width="750" height="500"></canvas>
-  <script src="/public/snake.js"></script>
+  
 
   <div class="background">
     <div class="content">
@@ -23,6 +23,14 @@
     </div>
   </div>
 
+  <div id="mobileButtons" style="display:none;">
+    <button class="btn-left" id="leftBtn">LEFT</button>
+    <button class="btn-right" id="rightBtn">RIGHT</button>
+    <button class="btn-up" id="upBtn">UP</button>
+    <button class="btn-down" id="downBtn">DOWN</button>
+  </div>
+
+  <script src="/public/snake.js"></script>
 
   <div class="highscorePreview">
     <table class="table table-hover table-dark table-bordered">

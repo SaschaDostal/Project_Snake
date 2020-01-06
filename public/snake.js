@@ -147,6 +147,18 @@ function snakeMain() {
       case 'd': case 'ArrowRight': state = enqueue(state, RIGHT); break;
     }
   })
+  document.getElementById("leftBtn").addEventListener("click", function () {
+    state = enqueue(state, LEFT);
+  });
+  document.getElementById("rightBtn").addEventListener("click", function () {
+    state = enqueue(state, RIGHT);
+  });
+  document.getElementById("upBtn").addEventListener("click", function () {
+    state = enqueue(state, UP);
+  });
+  document.getElementById("downBtn").addEventListener("click", function () {
+    state = enqueue(state, DOWN);
+  });
 
   draw();
   window.requestAnimationFrame(step(0))
@@ -187,12 +199,15 @@ function resize() {
   if(window.innerWidth > 750 && window.innerHeight > 500){
       height = 500;
       width = 750;
+      document.getElementById('mobileButtons').style.display = 'none';
   } else if (windowRatio < canvasRatio) {
       height = 0.8 * window.innerHeight;
       width = 3/2 * height;
+      document.getElementById('mobileButtons').style.display = 'none';
   } else {
       width = window.innerWidth;
       height = 2/3 * width ;
+      document.getElementById('mobileButtons').style.display = 'block';
   }
 
   canvas.style.width = width + 'px';
