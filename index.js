@@ -16,7 +16,7 @@ app.use("/public", express.static(process.cwd() + "/public"));
 app.use("/views", express.static(process.cwd() + "/views"));
 
 app.get("/", (req, res) => {
-  res.render("pages/Loginscreen.ejs");
+  res.render("pages/index.ejs");
 });
 
 app.get("/pages/highscore.ejs", (req, res) => {
