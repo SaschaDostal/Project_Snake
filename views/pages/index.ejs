@@ -4,7 +4,7 @@
   <% include ../partials/header %>
   <link rel="stylesheet" href="/public/style.css">
   <script>require = () => ({}); module = {}; module.exports = () => ({})</script>
-  <link rel="stylesheet" href="/public/style_defeat.css">
+  <!--<link rel="stylesheet" href="/public/style_defeat.css">-->
 </head>
 
 <body class="gameBody">
@@ -17,17 +17,19 @@
   <div class="background">
     <div class="content">
       <img class="img" src="/views/pages/so.png">
-      <a href="/pages/highscore.ejs"><button id="highscoreButton" type="submit">Save Highscore</button></a>
-      <a href="/pages/highscore.ejs"><button>Show Highscores</button></a>
-      <a href="javascript:location.reload()"><button>Try again!</button></a>
+      <h3 class="gameHeadline2" id=gamepointsDefeat></h3>
+      <a href="/pages/highscore.ejs"><button id="highscoreButton" type="submit" class="defeatButton">Save Highscore</button></a>
+      <a href="/pages/highscore.ejs"><button class="defeatButton">Show Highscores</button></a>
+      <a href="javascript:location.reload()"><button class="defeatButton">Try again!</button></a>
+      
     </div>
   </div>
 
   <div class="mobileBtn" id="mobileButtons" style="text-align:center; display:none;">
-    <button class="btn-up" id="upBtn">UP</button><br>
-    <button class="btn-left" id="leftBtn">LEFT</button>
-    <button class="btn-right" id="rightBtn">RIGHT</button><br>
-    <button class="btn-down" id="downBtn">DOWN</button>
+    <button class="defeatButton" id="upBtn">UP</button><br>
+    <button class="defeatButton" id="leftBtn">LEFT</button>
+    <button class="defeatButton" id="rightBtn">RIGHT</button><br>
+    <button class="defeatButton" id="downBtn">DOWN</button>
   </div>
 
   <script src="/public/snake.js"></script>
