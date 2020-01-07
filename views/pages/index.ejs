@@ -10,22 +10,52 @@
 <body class="gameBody">
   <%- include('../partials/nav', { active: 'Game' }) %>
   <h2 class="gameHeadline2" id=gamepoints>Play the Game!</h2>
-  <button id="gamestart" type="submit">Start</button>
+  <button class="btn btn-success startButton" id="gamestart" type="submit">Start</button><br>
   <canvas id="gamecanvas" width="750" height="500"></canvas>
-  <script src="/public/snake.js"></script>
+  
 
   <div class="background">
     <div class="content">
       <img class="img" src="/views/pages/so.png">
-      <a href="/pages/highscore.ejs"><button id="highscoreButton" type="submit">Highscore</button></a>
+      <a href="/pages/highscore.ejs"><button id="highscoreButton" type="submit">Save Highscore</button></a>
+      <a href="/pages/highscore.ejs"><button>Show Highscores</button></a>
       <a href="javascript:location.reload()"><button>Try again!</button></a>
     </div>
   </div>
 
+  <div class="mobileBtn" id="mobileButtons" style="text-align:center; display:none;">
+    <button class="btn-up" id="upBtn">UP</button><br><br>
+    <button class="btn-left" id="leftBtn">LEFT</button>
+    <button class="btn-right" id="rightBtn">RIGHT</button><br><br>
+    <button class="btn-down" id="downBtn">DOWN</button>
+  </div>
+
+  <script src="/public/snake.js"></script>
+
+  <div class="highscorePreview">
+    <table class="table table-hover table-dark table-bordered">
+      <thead>
+        <tr>
+          <th scope="col">Place</th>
+          <th scope="col">Name</th>
+          <th scope="col">Score</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% data.length %>
+        <% data.forEach(function (elem) { %>
+        <tr>
+          <td><%= data.indexOf(elem)+1 %></td>
+          <td><%= elem.Username %></td>
+          <td><%= elem.Highscore %></td>
+        </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
 
 
-
-  <div class="workaround" id="NICE"><%= yourID %></div>
+  <div class="workaround" id="NICE"><%= username %></div>
 </body>
 
 </html>

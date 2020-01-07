@@ -25,15 +25,31 @@
   text-align: center;
   padding: 20px;
 }
-button {
-  width: 45%;
+.startButton {
+  min-width: 80px;
+  max-width: 750px;
+  width: 10%;
   margin: 10px;
-
 }
 .gameBody {
   background-color: black;
 }
-
+.highscoreBody {
+  background-color: black;
+}
+.snakeIt {
+  color: white;
+}
 .workaround {
   display: none;
+}
+.highscorePreview {
+  position: relative;
+  align-self: flex-end;
+}
+
+.mobileBtn button {
+  background-color: #808080;
+  border: 1px solid rgb(64, 65, 64);
+  color: white;
 }

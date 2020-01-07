@@ -25,8 +25,10 @@ const UP = { x: 0, y: -1 }
 const DOWN = { x: 0, y: 1 }
 const RIGHT = { x: 1, y: 0 }
 const LEFT = { x: -1, y: 0 }
+resize();
 var notChrashed = true;
 var snakeLength = 0;
+var gameStarted = false;
 
 //SnakeGameMain
 function snakeMain() {
@@ -117,7 +119,7 @@ function snakeMain() {
     }
 
     //draw borders
-    ctx.fillStyle = 'rgb(255,50,0  )'
+    ctx.fillStyle = 'rgb(128,128,128)'
     ctx.fillRect(0, 0, x(1), canvas.height)
     ctx.fillRect(0, 0, canvas.width, x(1))
     ctx.fillRect(canvas.width - x(1), 0, canvas.width, canvas.height)
@@ -145,17 +147,32 @@ function snakeMain() {
       case 'd': case 'ArrowRight': state = enqueue(state, RIGHT); break;
     }
   })
+  document.getElementById("leftBtn").addEventListener("click", function () {
+    state = enqueue(state, LEFT);
+  });
+  document.getElementById("rightBtn").addEventListener("click", function () {
+    state = enqueue(state, RIGHT);
+  });
+  document.getElementById("upBtn").addEventListener("click", function () {
+    state = enqueue(state, UP);
+  });
+  document.getElementById("downBtn").addEventListener("click", function () {
+    state = enqueue(state, DOWN);
+  });
 
   draw();
   window.requestAnimationFrame(step(0))
 }
 
 // Run Main
-ctx.fillStyle = 'rgb(0,0,255)'
+ctx.fillStyle = 'rgb(128,128,128)'
 ctx.fillRect(0, 0, canvas.width, canvas.height)
 document.getElementById("gamestart").addEventListener("click", function () {
   console.info("ButtonPressed")
-  snakeMain();
+  if(!gameStarted){
+    snakeMain();
+    gameStarted = true;
+  }
 });
 
 
@@ -166,6 +183,35 @@ function submitScore () {
     console.info("Score=" + snakeLength/2);
     xhttp.open("POST", "saveScore", true);
     xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded;charset=UTF-8");
-    xhttp.send("Score=" + (snakeLength/2) + "&myID=" + document.getElementById("NICE").innerHTML);
+    xhttp.send("Score=" + (snakeLength/2) + "&uname=" + document.getElementById("NICE").innerHTML);
   });
 }
+
+// resize the gamecanvas
+function resize() {
+
+  var canvas = document.getElementById('gamecanvas');
+  var canvasRatio = canvas.height / canvas.width;
+  var windowRatio = window.innerHeight / window.innerWidth;
+  var width;
+  var height;
+
+  if(window.innerWidth > 750 && window.innerHeight > 500){
+      height = 500;
+      width = 750;
+      document.getElementById('mobileButtons').style.display = 'none';
+  } else if (windowRatio < canvasRatio) {
+      height = 0.8 * window.innerHeight;
+      width = 3/2 * height;
+      document.getElementById('mobileButtons').style.display = 'none';
+  } else {
+      width = window.innerWidth;
+      height = 2/3 * width ;
+      document.getElementById('mobileButtons').style.display = 'block';
+  }
+
+  canvas.style.width = width + 'px';
+  canvas.style.height = height + 'px';
+};
+
+window.addEventListener('resize', resize, false);
