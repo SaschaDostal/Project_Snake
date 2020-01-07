@@ -34,6 +34,12 @@
 .gameBody {
   background-color: black;
 }
+.highscoreBody {
+  background-color: black;
+}
+.snakeIt {
+  color: white;
+}
 .workaround {
   display: none;
 }
