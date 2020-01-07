@@ -42,7 +42,10 @@ function snakeMain() {
       return pointEq(nextHead(state))(state.apple);}
   const willCrash = state => {
     if (state.snake.find(pointEq(nextHead(state))) || nextHead(state).x >= state.cols - 1 || nextHead(state).x < 1 || nextHead(state).y >= state.rows - 1 || nextHead(state).y < 1) {
-      document.querySelector('.background').style.display = "flex"; notChrashed = false; console.info("willCrash"); submitScore();return true;
+      document.querySelector('.background').style.display = "flex"; notChrashed = false; console.info("willCrash"); submitScore();
+      document.getElementById("gamepointsDefeat").innerHTML = "Score: " + (snakeLength/2);
+      return true;
+
     }
     console.info("willNotCrash"); return false;
   }
