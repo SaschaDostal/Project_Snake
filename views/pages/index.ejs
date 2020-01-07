@@ -4,7 +4,7 @@
   <% include ../partials/header %>
   <link rel="stylesheet" href="/public/style.css">
   <script>require = () => ({}); module = {}; module.exports = () => ({})</script>
-  <link rel="stylesheet" href="/public/style_defeat.css">
+  <!--<link rel="stylesheet" href="/public/style_defeat.css">-->
 </head>
 
 <body class="gameBody">
@@ -17,9 +17,9 @@
   <div class="background">
     <div class="content">
       <img class="img" src="/views/pages/so.png">
-      <a href="/pages/highscore.ejs"><button id="highscoreButton" type="submit">Save Highscore</button></a>
-      <a href="/pages/highscore.ejs"><button>Show Highscores</button></a>
-      <a href="javascript:location.reload()"><button>Try again!</button></a>
+      <a href="/pages/highscore.ejs"><button id="highscoreButton" type="submit" class="defeatButton">Save Highscore</button></a>
+      <a href="/pages/highscore.ejs"><button class="defeatButton">Show Highscores</button></a>
+      <a href="javascript:location.reload()"><button class="defeatButton">Try again!</button></a>
     </div>
   </div>
 
