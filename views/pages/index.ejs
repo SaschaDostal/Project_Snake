@@ -12,18 +12,6 @@
   <h2 class="gameHeadline2" id=gamepoints>Play the Game!</h2>
   <button class="btn btn-success startButton" id="gamestart" type="submit">Start</button><br>
   <canvas id="gamecanvas" width="750" height="500"></canvas>
-  
-
-  <div class="background">
-    <div class="content">
-      <img class="img" src="/views/pages/so.png">
-      <h3 class="gameHeadline2" id=gamepointsDefeat></h3>
-      <a href="/pages/highscore.ejs"><button id="highscoreButton" type="submit" class="defeatButton">Save Highscore</button></a>
-      <a href="/pages/highscore.ejs"><button class="defeatButton">Show Highscores</button></a>
-      <a href="javascript:location.reload()"><button class="defeatButton">Try again!</button></a>
-      
-    </div>
-  </div>
 
   <div class="mobileBtn" id="mobileButtons" style="text-align:center; display:none;">
     <button class="defeatButton" id="upBtn">UP</button><br>
@@ -56,6 +44,17 @@
     </table>
   </div>
 
+  <div class="background">
+    <div class="content">
+      <br><br><br><br><br><br>
+      <img class="img" src="/views/pages/so.png">
+      <h3 class="gameHeadline2" id=gamepointsDefeat></h3>
+      <a href="/pages/highscore.ejs"><button id="highscoreButton" type="submit" class="defeatButton">Save Highscore</button></a>
+      <a href="/pages/highscore.ejs"><button class="defeatButton">Show Highscores</button></a>
+      <a href="javascript:location.reload()"><button class="defeatButton">Try again!</button></a>
+      
+    </div>
+  </div>
 
   <div class="workaround" id="NICE"><%= username %></div>
 </body>

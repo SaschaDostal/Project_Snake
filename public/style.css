@@ -25,19 +25,13 @@
 }
 
 .img{
-  width: 700px;
-  height: 500px;
-  background-color: rgba(0, 0, 0, 0);
-  opacity: 1;
-  text-align: center;
-  padding: 20px;
-  margin: auto;
-  transform: translate(-20%, -0%);
-  
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 40%;
 }
 .content{
-  width: 500px;
-  height: 300px;
+  width: 70%;
   background-color: rgba(0, 0, 0, 0);
   opacity: 1;
   text-align: center;
@@ -69,7 +63,12 @@
   position: relative;
   align-self: flex-end;
 }
-
+.loginimg {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 40%;
+}
 .mobileBtn button {
   background-color: #808080;
   border: 1px solid rgb(64, 65, 64);
