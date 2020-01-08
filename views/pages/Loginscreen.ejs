@@ -13,7 +13,7 @@
         <div class="input-group-prepend">
           <span class="input-group-text" id="basic-addon1">Username:</span>
         </div>
-        <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1"  name="uname">
+        <input type="text" pattern=".{3,10}" required title="3 to 10 characters" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1"  name="uname">
         <div class="input-group-append">
           <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Submit</button>
         </div>
