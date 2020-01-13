@@ -1,4 +1,4 @@
-# Clicker
+# ProjectSnake
 
 Hallo Welt
 
