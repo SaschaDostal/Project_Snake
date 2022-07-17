@@ -1,6 +1,11 @@
 # Project Snake (Snake It)
 
-Group B
+Project work in the subject Internet Programming. 
+This application hosts a website where you can play snake. 
+The site automatically detects whether the game is played on a desktop PC or a mobile device and adjusts the UI elements accordingly.
+
+## Preview
+![Alt text](./preview/preview_0.PNG)
 
 ## Getting Started
 
